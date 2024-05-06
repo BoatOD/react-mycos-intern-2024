@@ -3,16 +3,12 @@ import TableRow from "@mui/material/TableRow";
 import { useCallback, useEffect, useState } from "react";
 import {
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
-  FormHelperText,
-  Button,
   IconButton,
 } from "@mui/material";
 import { ITodo } from "../MyTodoList/ITodo";
 import { todoApi } from "../../api/TodoApi";
-import datetime from 'moment';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import moment from "moment";
@@ -23,7 +19,7 @@ interface ITodoItemProps {
 
 const TableTodoList = (props: ITodoItemProps) => {
   const { todoItem } = props;
-  const [innerTodo, setInnerTodo] = useState<ITodo>(todoItem);
+  const [innerTodo] = useState<ITodo>(todoItem);
   const [dateFormat, setDateFormat] = useState<string>('');
 
   useEffect(() => {
@@ -49,14 +45,14 @@ const TableTodoList = (props: ITodoItemProps) => {
     }
   }, []);
 
-  const handleDelete = async () => {
-    try {
-        await todoApi.deleteTodos(innerTodo.id)
-        console.log("Succeed");
-      } catch {
-        console.log("fail");
-      }
-  }
+  // const handleDelete = async () => {
+  //   try {
+  //       await todoApi.deleteTodos(innerTodo.id)
+  //       console.log("Succeed");
+  //     } catch {
+  //       console.log("fail");
+  //     }
+  // }
 
   return (
     <>

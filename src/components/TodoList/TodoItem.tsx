@@ -1,8 +1,4 @@
-import React, { useCallback, useState } from "react";
-
-import { Button, Checkbox, FormControlLabel } from "@mui/material";
-import { todoApi } from "../../api/TodoApi";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { ITodo } from "../MyTodoList/ITodo";
 
 interface ITodoItemProps {
@@ -10,7 +6,7 @@ interface ITodoItemProps {
 }
 const TodoItem = (props: ITodoItemProps) => {
   const { todoItem } = props;
-  const [innerTodo, setInnerTodo] = useState<ITodo>(todoItem);
+  const [innerTodo] = useState<ITodo>(todoItem);
   return (
     <>
       <h1>{ innerTodo.title }</h1>

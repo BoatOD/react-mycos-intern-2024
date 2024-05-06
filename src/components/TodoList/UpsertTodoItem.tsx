@@ -1,13 +1,9 @@
 import { Button, Grid, TextField } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { todoApi } from "../../api/TodoApi";
-import { ITodo } from "../MyTodoList/ITodo";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UpsertTodoItem = () => {
-  const { id } = useParams();
   const navigate = useNavigate();
-  const [todo, setTodo] = useState<ITodo | undefined>();
   const [todoName, setTodoName] = useState("");
   const [todoDetail, setTodoDetail] = useState("");
   // const onSave = async () => {
