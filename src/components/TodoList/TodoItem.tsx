@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from "react";
-import { ITodo } from "./ListContainer";
+
 import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import { todoApi } from "../../api/TodoApi";
 import { Link, useNavigate } from "react-router-dom";
+import { ITodo } from "../MyTodoList/ITodo";
 
 interface ITodoItemProps {
   todoItem: ITodo;

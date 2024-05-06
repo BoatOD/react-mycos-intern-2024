@@ -2,7 +2,7 @@ import { Button, Grid, TextField } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { todoApi } from "../../api/TodoApi";
-import { ITodo } from "./ListContainer";
+import { ITodo } from "../MyTodoList/ITodo";
 
 const UpsertTodoItem = () => {
   const { id } = useParams();

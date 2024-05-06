@@ -5,6 +5,7 @@ import Profile from "./pages/ProfilePage";
 import DashboardPage from "./pages/DashboardPage";
 import PageLayout from "./pages/PageLayout";
 import TodoUpsertPage from "./pages/TodoUpsertPage";
+import MainTodoList from "./components/MyTodoList/MainTodoList";
 interface IROUTE {
   path: string;
   component: JSX.Element;
@@ -26,6 +27,10 @@ const ROUTES: IROUTE[] = [
   {
     path: "/profile",
     component: <Profile />,
+  },
+  {
+    path: "/todos/my",
+    component: <MainTodoList />,
   },
 ];
 

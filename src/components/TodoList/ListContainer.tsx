@@ -2,14 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import TodoItem from "./TodoItem";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { todoApi } from "../../api/TodoApi";
-export interface ITodo {
-  id: string;
-  title: string;
-  description: string;
-  createDate: string;
-  updateDate: string;
-  dueDate: string;
-}
+import { ITodo } from "../MyTodoList/ITodo";
 
 const ListContainer = () => {
   //use for keep the vairable value
