@@ -3,13 +3,13 @@ import { ITodo } from "./ListContainer";
 import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import { todoApi } from "../../api/TodoApi";
 import { Link, useNavigate } from "react-router-dom";
+
 interface ITodoItemProps {
   todoItem: ITodo;
 }
 const TodoItem = (props: ITodoItemProps) => {
   const { todoItem } = props;
   const [innerTodo, setInnerTodo] = useState<ITodo>(todoItem);
-  const navigate = useNavigate();
   return (
     <>
       <h1>{ innerTodo.title }</h1>

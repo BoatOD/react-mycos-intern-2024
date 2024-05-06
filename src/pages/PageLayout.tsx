@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 const PageLayout = () => {
   return (
     <div style={{ margin: -8 }}>
-      <AppBar style={{ top: 0, left: 0, right: 0 }} position="static">
+      {/* <AppBar style={{ top: 0, left: 0, right: 0 }} position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Typography
@@ -31,8 +31,8 @@ const PageLayout = () => {
             </Typography>
           </Toolbar>
         </Container>
-      </AppBar>
-      <Box pt={3}>
+      </AppBar> */}
+      <Box>
         <Outlet />
       </Box>
     </div>
