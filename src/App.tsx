@@ -6,6 +6,9 @@ import DashboardPage from "./pages/DashboardPage";
 import PageLayout from "./pages/PageLayout";
 import TodoUpsertPage from "./pages/TodoUpsertPage";
 import MainTodoList from "./components/MyTodoList/MainTodoList";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 interface IROUTE {
   path: string;
   component: JSX.Element;
@@ -36,19 +39,21 @@ const ROUTES: IROUTE[] = [
 
 function App() {
   return (
-    <ThemeProvider theme={themeConfig}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<PageLayout />}>
-            <Route path="*" element={<Navigate to="/todos" replace />} />
-            <Route path="/" element={<Navigate to="/todos" replace />} />
-            {ROUTES.map((r) => (
-              <Route path={r.path} element={r.component} />
-            ))}
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <ThemeProvider theme={themeConfig}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<PageLayout />}>
+              <Route path="*" element={<Navigate to="/todos/my" replace />} />
+              <Route path="/" element={<Navigate to="/todos/my" replace />} />
+              {ROUTES.map((r) => (
+                <Route path={r.path} element={r.component} key={r.path} />
+              ))}
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </LocalizationProvider>
   );
 }
 

@@ -7,18 +7,8 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { todoApi } from "../../api/TodoApi";
-
-const AddTodoDialog = ({
-  open,
-  onClose,
-  onSuccess,
-}: {
-  open: boolean;
-  onClose: () => void;
-  onSuccess?: () => void;
-}) => {
+import { useEffect, useState } from "react";
+const AddTodoDialog = ({open, onClose,}: {open: boolean; onClose: () => void; onSuccess?: () => void;}) => {
   const [todoName, setTodoName] = useState("");
   const [todoDetail, setTodoDetail] = useState("");
   // const onSave = async () => {

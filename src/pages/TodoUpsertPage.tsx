@@ -1,4 +1,3 @@
-import React from "react";
 import UpsertTodoItem from "../components/TodoList/UpsertTodoItem";
 import { Box } from "@mui/material";
 

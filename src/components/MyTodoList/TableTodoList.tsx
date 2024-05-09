@@ -13,29 +13,43 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import moment from "moment";
 
-interface ITodoItemProps {
-  todoItem: ITodo;
-}
+// interface ITodoItemProps {
+//   todoItem: ITodo;
+// }
 
-const TableTodoList = (props: ITodoItemProps) => {
-  const { todoItem } = props;
-  const [innerTodo] = useState<ITodo>(todoItem);
+const TableTodoList = ({
+  props,
+  onEdit,
+  onDelete,
+} : {
+  props: ITodo;
+  onEdit: (todo: ITodo) => void;
+  onDelete: () => void;
+}) => {
+  const todoItem = {...props};
+  const [innerTodo, setInnerTodo] = useState<ITodo>(todoItem);
   const [dateFormat, setDateFormat] = useState<string>('');
 
   useEffect(() => {
-    const date_str = innerTodo.dueDate;
-    const date_obj = moment(date_str);
-    setDateFormat(date_obj.format("DD-MM-YYYY"));
-  }, []);
+    formatDataDate()
+  }, [todoItem]);
 
   const onSubmit = () => {
     console.log("Change Status to");
   };
 
+  const formatDataDate = () => {
+    const TodoClone = {...todoItem}
+    const date_str = TodoClone.dueDate;
+    const date_obj = moment(date_str);
+    setDateFormat(date_obj.format("DD-MM-YYYY"));
+    setInnerTodo(todoItem)
+  }
+
   const handleChange = useCallback(async (event: any) => {
     console.log("Change Status to", event.target.value);
     try {
-      await todoApi.updateStatus(innerTodo.id, {
+      await todoApi.updateStatus(innerTodo.id!, {
         ...innerTodo,
         status: event.target.value,
       });
@@ -45,14 +59,19 @@ const TableTodoList = (props: ITodoItemProps) => {
     }
   }, []);
 
-  // const handleDelete = async () => {
-  //   try {
-  //       await todoApi.deleteTodos(innerTodo.id)
-  //       console.log("Succeed");
-  //     } catch {
-  //       console.log("fail");
-  //     }
-  // }
+  const handleEdit = () => {
+    onEdit(todoItem);
+  }
+
+  const handleDelete = async () => {
+    try {
+        await todoApi.deleteTodos(innerTodo.id!)
+        onDelete();
+        console.log("Succeed");
+      } catch {
+        console.log("fail");
+      }
+  }
 
   return (
     <>
@@ -60,10 +79,10 @@ const TableTodoList = (props: ITodoItemProps) => {
         key={innerTodo.title}
         sx={{ "&:last-child td, &:last-child th": { border: 0 }, borderBottom: 2, borderColor: "#303030" }}
       >
-        <TableCell component="th" scope="row" align="center" sx={{fontSize: 20}}>
+        <TableCell component="th" scope="row" align="center" sx={{fontSize: 20, fontFamily: "Poppins"}}>
           {innerTodo.title}
         </TableCell>
-        <TableCell align="center" sx={{fontSize: 20}}>{dateFormat}</TableCell>
+        <TableCell align="center" sx={{fontSize: 20, fontFamily: "Poppins"}}>{dateFormat !== 'Invalid date' ? dateFormat : "None"}</TableCell>
         <TableCell align="center">
           <form onSubmit={onSubmit}>
             <FormControl fullWidth>
@@ -75,22 +94,22 @@ const TableTodoList = (props: ITodoItemProps) => {
                   handleChange(event);
                 }}
                 aria-describedby="select-status-helper-text"
-                sx={{borderRadius: '100px', backgroundColor: "#F1F1F1", fontSize: 20}}
+                sx={{borderRadius: '100px', backgroundColor: "#F1F1F1", fontSize: 20, fontFamily: "Poppins", color: "#303030"}}
               >
-                <MenuItem value={"In Progress"} sx={{fontSize: 20}}>In progress</MenuItem>
-                <MenuItem value={"Complete"} sx={{fontSize: 20}}>Complete</MenuItem>
-                <MenuItem value={"Not Started"} sx={{fontSize: 20}}>Not Started</MenuItem>
+                <MenuItem value={"In Progress"} sx={{fontSize: 20, fontFamily: "Poppins", color: "#303030"}}>In progress</MenuItem>
+                <MenuItem value={"Complete"} sx={{fontSize: 20, fontFamily: "Poppins", color: "#303030"}}>Complete</MenuItem>
+                <MenuItem value={"Not Started"} sx={{fontSize: 20, fontFamily: "Poppins", color: "#303030"}}>Not Started</MenuItem>
               </Select>
             </FormControl>
           </form>
         </TableCell>
         <TableCell align="center">
-          <IconButton aria-label="edit" size="medium" sx={{ border: 1, borderColor: '#0047FF', borderRadius: '5px', ":hover": {border: 2, borderColor: '#0047FF', backgroundColor: "#0047FF"}}}>
+          <IconButton aria-label="edit" size="medium" onClick={handleEdit} sx={{ border: 1, borderColor: '#0047FF', borderRadius: '5px', ":hover": {border: 2, borderColor: '#0047FF', backgroundColor: "#0047FF"}}}>
             <EditOutlinedIcon sx={{color: "#0047FF", ":hover": {color: "#FFFFFF"}}}/>
           </IconButton>
         </TableCell>
         <TableCell align="center">
-          <IconButton aria-label="delete" size="medium" sx={{ border: 1, borderColor: '#FF0000', borderRadius: '5px', ":hover": {border: 2, borderColor: '#FF0000', backgroundColor: "#FF0000"}}}>
+          <IconButton aria-label="delete" size="medium" onClick={handleDelete} sx={{ border: 1, borderColor: '#FF0000', borderRadius: '5px', ":hover": {border: 2, borderColor: '#FF0000', backgroundColor: "#FF0000"}}}>
             <DeleteOutlinedIcon sx={{color: "#FF0000", ":hover": {color: "#FFFFFF"}}}/>
           </IconButton>
         </TableCell>

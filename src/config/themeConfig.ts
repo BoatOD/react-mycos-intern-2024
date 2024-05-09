@@ -18,4 +18,10 @@ export const themeConfig = createTheme({
       },
     },
   },
+  typography: {
+    fontFamily: [
+      'Poppins',
+      'sans-serif',
+    ].join(','),
+  }
 });

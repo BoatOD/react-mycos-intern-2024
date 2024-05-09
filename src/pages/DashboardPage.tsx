@@ -1,4 +1,3 @@
-import React from "react";
 import ListContainer from "../components/TodoList/ListContainer";
 
 const DashboardPage = () => {
