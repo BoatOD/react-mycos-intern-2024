@@ -28,14 +28,16 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import FormTodo from "./FormTodo";
+import AlartPopup from "./AlartPopup";
 
 const MainTodoList = () => {
-  //use for keep the vairable value
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [innerTodo, setInnerTodo] = useState<ITodo[]>([]);
   const [sortData, setSortData] = useState<string>("All");
   const [todoToEdit, setTodoToEdit] = useState<ITodo | undefined>();
   const [isAddActive, setIsAddActive] = useState<boolean>(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
+  const [idToDelete, setIdToDelete] = useState<string>(""); 
 
   const getTodos = useCallback(async () => {
     const result = await todoApi.getTodos();
@@ -117,7 +119,6 @@ const MainTodoList = () => {
       });
     }
     setInnerTodo(sortedTodos);
-    // setTodos(sortedTodos);
   };
 
   const handleSearch = (event: any) => {
@@ -134,6 +135,12 @@ const MainTodoList = () => {
 
     setInnerTodo(filteredTodos);
   };
+
+  const handleDelete = (id: string) => {
+    setIdToDelete(id);
+    setShowDeleteAlert(true);
+    return true;
+  }
 
   return (
     <>
@@ -374,7 +381,7 @@ const MainTodoList = () => {
                   >
                     <span className="HeadTable">
                       <DeleteOutlinedIcon />
-                      Delete
+                      Remove
                     </span>
                   </TableCell>
                 </TableRow>
@@ -384,7 +391,7 @@ const MainTodoList = () => {
                   return (
                     <TableTodoList
                       props={item}
-                      onDelete={getTodos}
+                      onDelete={(id) => handleDelete(id)}
                       onEdit={(e) => {
                         setTodoToEdit(e);
                         setIsAddActive(true);
@@ -408,6 +415,7 @@ const MainTodoList = () => {
           onSuccess={getTodos}
           dataToEdit={todoToEdit}
         />
+        <AlartPopup open={showDeleteAlert} onClose={() => {setShowDeleteAlert(false); getTodos();}} id={idToDelete} />
       </div>
     </>
   );

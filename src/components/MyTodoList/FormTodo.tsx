@@ -163,7 +163,17 @@ const FormTodo = ({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Grid container spacing={2} justifyContent={"end"}>
+          <Grid container spacing={2} justifyContent={"end"} mx={3} mb={3}>
+            <Grid item xs={1.5}>
+            <Button
+                fullWidth
+                onClick={onClose}
+                color="secondary"
+                sx={{ borderRadius: "100px", fontSize: "1.4rem" }}
+              >
+                Cancel
+              </Button>
+            </Grid>
             <Grid item xs={1.5}>
               <Button
                 fullWidth
@@ -172,16 +182,6 @@ const FormTodo = ({
                 sx={{ borderRadius: "100px", fontSize: "1.4rem" }}
               >
                 Save
-              </Button>
-            </Grid>
-            <Grid item xs={1.5}>
-              <Button
-                fullWidth
-                onClick={onClose}
-                color="secondary"
-                sx={{ borderRadius: "100px", fontSize: "1.4rem" }}
-              >
-                Cancel
               </Button>
             </Grid>
           </Grid>
