@@ -221,7 +221,7 @@ const MainTodoList = () => {
                   id="data-sort-label"
                   sx={{ fontSize: 26, color: "#E9E9E9", fontFamily: "Poppins" }}
                 >
-                  Filter
+                  Sort By
                 </InputLabel>
                 <Select
                   labelId="data-sort-label"

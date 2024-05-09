@@ -1,12 +1,13 @@
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { useCallback, useEffect, useState } from "react";
-import { FormControl, Select, MenuItem, IconButton } from "@mui/material";
+import { FormControl, Select, MenuItem, IconButton, Grid } from "@mui/material";
 import { ITodo } from "../MyTodoList/ITodo";
 import { todoApi } from "../../api/TodoApi";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import moment from "moment";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 
 // interface ITodoItemProps {
 //   todoItem: ITodo;
@@ -24,6 +25,7 @@ const TableTodoList = ({
   const todoItem = { ...props };
   const [innerTodo, setInnerTodo] = useState<ITodo>(todoItem);
   const [dateFormat, setDateFormat] = useState<string>("");
+  const [timeFormat, setTimeFormat] = useState<string>("");
   const [statusColor, setStatusColor] = useState<string>("#F1F1F1");
 
   useEffect(() => {
@@ -39,34 +41,32 @@ const TableTodoList = ({
     const TodoClone = { ...todoItem };
     const date_str = TodoClone.dueDate;
     const date_obj = moment(date_str);
-    setDateFormat(date_obj.format("DD-MM-YYYY"));
+    setDateFormat(date_obj.format("MMMM Do YYYY"));
+    setTimeFormat(date_obj.format("h:mm:ss a"));
     setInnerTodo(todoItem);
   };
 
   const changeColor = (status: "In Progress" | "Complete" | "Not Started") => {
-    if (status === 'In Progress')
-      setStatusColor("#FFB038") 
-    else if (status === 'Complete')
-      setStatusColor("#61FF00") 
-    else
-      setStatusColor("#E9E9E9")
-  }
+    if (status === "In Progress") setStatusColor("#FFB038");
+    else if (status === "Complete") setStatusColor("#61FF00");
+    else setStatusColor("#E9E9E9");
+  };
 
   const handleChange = async (event: any) => {
-    const selectedStatus: "In Progress" | "Complete" | "Not Started" = event.target.value;
-    
+    const selectedStatus: "In Progress" | "Complete" | "Not Started" =
+      event.target.value;
 
     try {
-      await todoApi.updateStatus(innerTodo.id!, 
-      {...innerTodo,
-        status: selectedStatus
+      await todoApi.updateStatus(innerTodo.id!, {
+        ...innerTodo,
+        status: selectedStatus,
       });
       changeColor(selectedStatus);
       console.log("Succeed");
     } catch {
       console.log("fail");
     }
-  }
+  };
 
   const handleEdit = () => {
     onEdit(todoItem);
@@ -103,7 +103,15 @@ const TableTodoList = ({
           {innerTodo.title}
         </TableCell>
         <TableCell align="center" sx={{ fontSize: 20, fontFamily: "Poppins" }}>
-          {dateFormat !== "Invalid date" ? dateFormat : "None"}
+          <Grid container justifyContent={"center"} spacing={2} direction={"column"}>
+            <Grid item sx={{color: "#303030"}}>
+              {dateFormat !== "Invalid date" ? dateFormat : "None"}
+            </Grid>
+            <Grid item container direction={"row"} justifyContent={"center"} sx={{color: "#303030"}}>
+              <AccessTimeOutlinedIcon sx={{fontSize: "1.5rem"}}/>
+              <Grid sx={{color: "#303030", fontSize: "1.2rem"}}>{timeFormat !== "Invalid date" ? timeFormat: "None"}</Grid>
+            </Grid>
+          </Grid>
         </TableCell>
         <TableCell align="center">
           <form onSubmit={onSubmit}>

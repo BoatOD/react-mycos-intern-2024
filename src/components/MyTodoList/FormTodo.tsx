@@ -29,15 +29,6 @@ const FormTodo = ({
   const [todoTaskName, setTodoTaskName] = useState<string>("");
   const [todoDescription, setTodoDescription] = useState<string>("");
   const [todoDate, setTodoDueDate] = useState<Dayjs | null>(null);
-  // const onSave = async () => {
-  //   await todoApi.addTodo({
-  //     name: todoName,
-  //     isDone: false,
-  //     detail: todoDetail,
-  //   });
-  //   onSuccess?.();
-  //   onClose();
-  // };
 
   const {
     register,
@@ -62,6 +53,7 @@ const FormTodo = ({
 
   const onFormValid = async (data: ITodo) => {
     data.dueDate = todoDate?.toISOString();
+    data.status = dataToEdit?.status!;
     if (dataToEdit) {
       await todoApi.updateTodo(dataToEdit.id!, data)
     } else {
