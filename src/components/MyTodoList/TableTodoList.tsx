@@ -38,7 +38,7 @@ const TableTodoList = ({
     const date_str = TodoClone.dueDate;
     const date_obj = moment(date_str);
     setDateFormat(date_obj.format("MMMM Do YYYY"));
-    setTimeFormat(date_obj.format("h:mm:ss a"));
+    setTimeFormat(date_obj.format("h:mm a"));
     setInnerTodo(todoItem);
   };
 

@@ -29,6 +29,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import FormTodo from "./FormTodo";
 import AlartPopup from "./AlartPopup";
+// import MobileContainner from "./MobileContainner";
 
 const MainTodoList = () => {
   const [todos, setTodos] = useState<ITodo[]>([]);
@@ -37,7 +38,7 @@ const MainTodoList = () => {
   const [todoToEdit, setTodoToEdit] = useState<ITodo | undefined>();
   const [isAddActive, setIsAddActive] = useState<boolean>(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState<boolean>(false);
-  const [idToDelete, setIdToDelete] = useState<string>(""); 
+  const [idToDelete, setIdToDelete] = useState<string>("");
 
   const getTodos = useCallback(async () => {
     const result = await todoApi.getTodos();
@@ -140,7 +141,7 @@ const MainTodoList = () => {
     setIdToDelete(id);
     setShowDeleteAlert(true);
     return true;
-  }
+  };
 
   return (
     <>
@@ -148,7 +149,7 @@ const MainTodoList = () => {
         <Stack my={10} mx={10} spacing={3}>
           <h1>Todo</h1>
           <Grid container>
-            <Grid item container columnSpacing={3} xs={10.5}>
+            <Grid item container direction={"row"} columnSpacing={3} xs={10.5}>
               <Grid item xs={2}>
                 <InputLabel
                   id="status-sort-label"
@@ -403,6 +404,28 @@ const MainTodoList = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          {/* <Grid
+            container
+            direction={"column"}
+            justifyContent={"center"}
+            rowSpacing={6}
+          >
+            {innerTodo.map((item) => {
+              return (
+                <Grid item xs={1}>
+                  <MobileContainner
+                    props={item}
+                    onDelete={(id) => handleDelete(id)}
+                    onEdit={(e) => {
+                      setTodoToEdit(e);
+                      setIsAddActive(true);
+                    }}
+                    key={item.id}
+                  ></MobileContainner>
+                </Grid>
+              );
+            })}
+          </Grid> */}
         </Stack>
         <FormTodo
           open={isAddActive}
@@ -415,7 +438,14 @@ const MainTodoList = () => {
           onSuccess={getTodos}
           dataToEdit={todoToEdit}
         />
-        <AlartPopup open={showDeleteAlert} onClose={() => {setShowDeleteAlert(false); getTodos();}} id={idToDelete} />
+        <AlartPopup
+          open={showDeleteAlert}
+          onClose={() => {
+            setShowDeleteAlert(false);
+            getTodos();
+          }}
+          id={idToDelete}
+        />
       </div>
     </>
   );
