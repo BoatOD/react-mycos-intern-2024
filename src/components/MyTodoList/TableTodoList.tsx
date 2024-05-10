@@ -1,6 +1,6 @@
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FormControl, Select, MenuItem, IconButton, Grid } from "@mui/material";
 import { ITodo } from "../MyTodoList/ITodo";
 import { todoApi } from "../../api/TodoApi";
@@ -8,10 +8,6 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import moment from "moment";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
-
-// interface ITodoItemProps {
-//   todoItem: ITodo;
-// }
 
 const TableTodoList = ({
   props,
@@ -74,14 +70,6 @@ const TableTodoList = ({
 
   const handleDelete = async () => {
     onDelete(innerTodo.id!);
-    // try {
-    //   if (await ) {
-    //     await todoApi.deleteTodos(innerTodo.id!);
-    //     console.log("Succeed");
-    //   }
-    // } catch {
-    //   console.log("fail");
-    // }
   };
 
   return (
