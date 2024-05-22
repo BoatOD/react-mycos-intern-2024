@@ -29,6 +29,7 @@ const FormTodo = ({
   const [todoTaskName, setTodoTaskName] = useState<string>("");
   const [todoDescription, setTodoDescription] = useState<string>("");
   const [todoDate, setTodoDueDate] = useState<Dayjs | null>(null);
+  const [todoStatus, setTodoStatus] = useState<"In Progress" | "Complete" | "Not Started">("Not Started");
 
   const {
     register,
@@ -53,10 +54,11 @@ const FormTodo = ({
 
   const onFormValid = async (data: ITodo) => {
     data.dueDate = todoDate?.toISOString();
-    data.status = dataToEdit?.status!;
     if (dataToEdit) {
+      data.status = todoStatus;
       await todoApi.updateTodo(dataToEdit.id!, data)
     } else {
+      data.status = todoStatus;
       await todoApi.addTodo(data);
     }
     onClose();
@@ -76,10 +78,12 @@ const FormTodo = ({
         setTodoTaskName(dataToEdit.title);
         setTodoDescription(dataToEdit.description);
         setTodoDueDate(dayjs(dataToEdit.dueDate));
+        setTodoStatus(dataToEdit.status);
       } else {
         setTodoTaskName("");
         setTodoDescription("");
         setTodoDueDate(null);
+        setTodoStatus("Not Started");
       }
     }
   }, [open]);
